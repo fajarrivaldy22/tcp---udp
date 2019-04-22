@@ -1,7 +1,7 @@
 import socket
 import json,urllib
 import time
-
+import threading
 
 url = 'https://indodax.com/api/btc_idr/trades'
 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -15,13 +15,20 @@ print("socket di bind ke %s port %d" % (ipserver,port))
 sock.listen(5)
 connections = []
 
+def getconnection():
+    while True:
+        connection, address = sock.accept()
+        connections.append(connection)
+        print('koneksi dari',address)
+
+
 temp = 0
+
+t = threading.Thread(target=getconnection,args=())
+t.start()
 while True:
 
-    connection, address = sock.accept()
-    connections.append(connection)
-    print('koneksi dari',address)
-
+    
     try:
         while True:
             try:
