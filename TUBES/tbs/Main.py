@@ -14,6 +14,7 @@ print("socket di bind ke %s port %d" % (ipserver,port))
 
 sock.listen(5)
 connections = []
+temp = 0
 
 def getconnection():
     while True:
@@ -21,14 +22,9 @@ def getconnection():
         connections.append(connection)
         print('koneksi dari',address)
 
-
-temp = 0
-
 t = threading.Thread(target=getconnection,args=())
 t.start()
 while True:
-
-    
     try:
         while True:
             try:
@@ -43,11 +39,3 @@ while True:
                 break
     finally:
         connection.close()
-
-
-    ##response = urllib.urlopen(url)
-    ##data = json.loads(response.read())
-    ##if((data[0]['tid']!=temp)  ): 
-        #sock.send('halo')
-    ##    temp = data[0]['tid']
-    ##time.sleep(2)
